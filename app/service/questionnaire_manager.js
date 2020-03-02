@@ -52,8 +52,6 @@ export default class QuestionnaireManagerService extends Service {
     const limit = _.toNumber(pageSize);
     const offset = _.toNumber(pageSize * (pageNum - 1));
 
-    // app.logger.info({ limit, offset });
-
     try {
       const { result, total } = await app.mysql.beginTransactionScope(
         async conn => {
@@ -77,7 +75,10 @@ export default class QuestionnaireManagerService extends Service {
             [user_id],
           );
 
-          return { result, total: count[0]['COUNT(questionnaire_id)'] };
+          return {
+            result,
+            total: _.get(count, '[0]["COUNT(questionnaire_id)"', 0),
+          };
         },
       );
 
@@ -159,7 +160,7 @@ export default class QuestionnaireManagerService extends Service {
 
           return {
             result,
-            total: count[0]['COUNT(questionnaire_id)'],
+            total: _.get(count, '[0]["COUNT(questionnaire_id)"', 0),
           };
         },
       );
@@ -170,7 +171,7 @@ export default class QuestionnaireManagerService extends Service {
         return _.assign(item, { status });
       });
 
-      ctx.body = { success: true, data: result, total };
+      ctx.body = { success: true, data, total };
     } catch (err) {
       ctx.body = { success: false, msg: '数据库错误' };
       app.logger.error(err);
