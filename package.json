@@ -45,7 +45,8 @@
     "lint": "eslint .",
     "ci": "npm run lint && npm run cov",
     "autod": "autod",
-    "cloc": "cloc . --exclude-list-file=.clocignore"
+    "cloc": "cloc . --exclude-list-file=.clocignore",
+    "deploy": "bash scripts/deploy.sh"
   },
   "ci": {
     "version": "10"

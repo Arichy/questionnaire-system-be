@@ -4,6 +4,8 @@
 
 const _ = require('lodash');
 
+const isDevelopment = process.env.NODE_ENV.toLowerCase() === 'development';
+
 /**
  * @param {Egg.EggAppInfo} appInfo app info
  */
@@ -28,7 +30,7 @@ module.exports = appInfo => {
   config.middleware = ['handleIdType'];
 
   config.cors = {
-    origin: 'http://localhost:8080',
+    origin: isDevelopment ? 'http://localhost:8080' : 'http://60.205.179.88',
     credentials: true,
     allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH',
   };
