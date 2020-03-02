@@ -40,7 +40,7 @@ class HomeController extends Controller {
     try {
       const user_id = await this.ctx.service.account.getUserId();
       const { questionnaire_id } = this.ctx.request.body;
-      this.app.logger.info({ user_id, questionnaire_id });
+
       if (
         await this.ctx.service.questionnaireManager.hasFilled({
           user_id,
